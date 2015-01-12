@@ -2,6 +2,7 @@ import ConfigParser
 import md5
 import os
 import shutil
+import sys
 from datetime import datetime
 
 from errors import BucketNotEmpty, NoSuchBucket
@@ -248,8 +249,9 @@ class FileStore(object):
             }
         try:
             config.add_section('metadata')
-        except DuplicateSectionError:
-            print 'This file already exists'
+        except:
+            e = sys.exc_info()[0]
+            print e
         config.set('metadata', 'size', metadata['size'])
         config.set('metadata', 'md5', metadata['md5'])
         config.set('metadata', 'filename', metadata['filename'])
