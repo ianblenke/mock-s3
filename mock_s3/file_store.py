@@ -246,7 +246,10 @@ class FileStore(object):
                 'filename': filename,
                 'size': size,
             }
-        config.add_section('metadata')
+        try:
+            config.add_section('metadata')
+        except DuplicateSectionError:
+            print 'This file already exists'
         config.set('metadata', 'size', metadata['size'])
         config.set('metadata', 'md5', metadata['md5'])
         config.set('metadata', 'filename', metadata['filename'])
